@@ -1,5 +1,8 @@
 #!/usr/bin/env bats
 
+# Hardcoded TODO states:
+# TODO INPROGRESS NEEDSREVIEW WAITING HOLD SOMEDAY | DONE CANCELLED
+
 # Config
 setup() {
   # Allow overriding which Emacs to use
@@ -117,7 +120,6 @@ assert_eq() {  # $1 expected, $2 actual
 }
 
 @test "deadline key (d): uses DEADLINE drawer if present" {
-  skip
   input=$'* A\n  DEADLINE: <2025-08-28 Thu>\n* B\n  DEADLINE: <2025-01-01 Wed>\n* C\n'
   expected=$'* B\n  DEADLINE: <2025-01-01 Wed>\n* A\n  DEADLINE: <2025-08-28 Thu>\n* C\n'
   output="$(printf "%s" "$input" | run_sort --key=d)"
@@ -125,7 +127,6 @@ assert_eq() {  # $1 expected, $2 actual
 }
 
 @test "priority key (p): [#A] < [#B] < none" {
-  skip
   input=$'* [#B] b\n* plain\n* [#A] a\n'
   expected=$'* [#A] a\n* [#B] b\n* plain\n'
   output="$(printf "%s" "$input" | run_sort --key=p)"
@@ -133,7 +134,6 @@ assert_eq() {  # $1 expected, $2 actual
 }
 
 @test "handles buffers starting at level-2 (treats first heading level as sibling set)" {
-  skip
   input=$'** z\n** a\n** b\n'
   expected=$'** a\n** b\n** z\n'
   output="$(printf "%s" "$input" | run_sort --key=a)"
@@ -141,9 +141,8 @@ assert_eq() {  # $1 expected, $2 actual
 }
 
 @test "multi-key stability: o then -a (alpha descending within TODO buckets)" {
-  skip
-  input=$'* SOMEDAY A\n* SOMEDAY Z\n* TODO B\n* TODO A\n* DONE M\n* DONE Z\n'
-  expected=$'* TODO Z\n* TODO A\n* SOMEDAY Z\n* SOMEDAY A\n* DONE Z\n* DONE M\n'
-  output="$(printf "%s" "$input" | run_sort --key=o --key=-a)"
+  input=$'* TODO B\n* TODO A\n* SOMEDAY A\n* SOMEDAY Z\n* DONE M\n* DONE Z\n'
+  expected=$'* TODO B\n* TODO A\n* SOMEDAY Z\n* SOMEDAY A\n* DONE Z\n* DONE M\n'
+  output="$(printf "%s" "$input" | run_sort -k oA)"
   assert_eq "$expected" "$output"
 }
