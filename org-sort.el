@@ -2,8 +2,8 @@
 ;;
 ;; Usage (primary key first):
 ;;   emacs --batch -Q --script org-sort-top-level.el -- --key=t --key=a  < in.org > out.org
-;;   emacs --batch -Q --script org-sort-top-level.el -- --key=-a         < in.org > out.org
-;;   emacs --batch -Q --script org-sort-top-level.el -- --key=p --key=-a < in.org > out.org
+;;   emacs --batch -Q --script org-sort-top-level.el -- --key=A         < in.org > out.org
+;;   emacs --batch -Q --script org-sort-top-level.el -- -k pA < in.org > out.org
 ;;
 ;; Keys (uppercase reverses sort order):
 ;;   a  alphabetical (headline text)
