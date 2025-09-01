@@ -5,7 +5,7 @@
 ;;   emacs --batch -Q --script org-sort-top-level.el -- --key=-a         < in.org > out.org
 ;;   emacs --batch -Q --script org-sort-top-level.el -- --key=p --key=-a < in.org > out.org
 ;;
-;; Keys:
+;; Keys (uppercase reverses sort order):
 ;;   a  alphabetical (headline text)
 ;;   n  numeric within headline
 ;;   o  TODO keyword order
@@ -13,13 +13,9 @@
 ;;   s  SCHEDULED timestamp
 ;;   d  DEADLINE timestamp
 ;;   t  other timestamp in headline
-;; Prefix with "-" to reverse that key (e.g. -a, -t, …).
-;;
-;; Note: Reverse is indicated by UPPERCASE sort code in org-sort-entries,
-;; so we upcase the code when a "-" prefix is given.
 
 (let* ((args command-line-args-left)
-       (keys '()))                       ;; raw specs like "a", "-t"
+       (keys '()))
 
   ;; Parse flags after `--`
   (while args
@@ -30,7 +26,7 @@
        ((string= a "-k")
         (when args (push (pop args) keys)))
        ((member a '("-h" "--help"))
-        (princ "Usage: emacs --batch -Q --script org-sort-top-level.el -- [--key=SPEC ...]\n")
+          (princ "Usage: emacs --batch -Q --script org-sort-top-level.el -- [--key=CODES]\n  CODES: sequence of sort codes, e.g. Oa (primary first)\n  Codes: a/A alpha, n/N numeric, o/O TODO-order, t/T timestamp, p/P priority, s/S scheduled, d/D deadline\n")
         (kill-emacs 0)))))
 
   (setq keys (nreverse keys))            ;; preserve user order
@@ -48,7 +44,7 @@ Lowercase = normal, uppercase = reverse."
   (with-temp-buffer
     (insert "#+TODO: TODO INPROGRESS NEEDSREVIEW WAITING HOLD SOMEDAY | DONE CANCELLED\n")
     (insert-file-contents "/dev/stdin")
-    (org-mode)                            ;; ensure org features active
+    (org-mode) 
     (let ((case-fold-search t))           ;; make alpha sort case-insensitive
       (goto-char (point-min))
       (when (re-search-forward org-heading-regexp nil t)
