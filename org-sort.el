@@ -30,6 +30,13 @@
         (kill-emacs 0)))))
 
   (setq keys (nreverse keys))            ;; preserve user order
+  ;; NEW: explode combined codes, e.g. "oa" => ("o" "a"), "Oa" => ("O" "a")
+  (setq keys
+        (apply #'append
+               (mapcar (lambda (s)
+                         (mapcar (lambda (c) (char-to-string c))
+                                 (string-to-list s)))
+                       keys)))
   (when (null keys) (setq keys '("a")))  ;; default alpha
 
   (defun org-sort-top-level--spec->code (spec)

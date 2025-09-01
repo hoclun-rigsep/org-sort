@@ -92,6 +92,13 @@ assert_eq() {  # $1 expected, $2 actual
   assert_eq "$expected" "$output"
 }
 
+@test "TODO then alpha inside groups: -k oa" {
+  input=$'* SOMEDAY Zzz\n* TODO zebra\n* DONE b\n* TODO alpha\n* SOMEDAY beta\n* CANCELLED c\n'
+  expected=$'* TODO alpha\n* TODO zebra\n* SOMEDAY beta\n* SOMEDAY Zzz\n* CANCELLED c\n* DONE b\n'
+  output="$(printf "%s" "$input" | run_sort -k oa)"
+  assert_eq "$expected" "$output"
+}
+
 @test "timestamp in headline (t = timestamp): ascending then reversed" {
   input=$'* A <2025-03-01 Sat>\n* B <2024-12-25 Wed>\n* C <2026-01-01 Thu>\n'
   expected_asc=$'* B <2024-12-25 Wed>\n* A <2025-03-01 Sat>\n* C <2026-01-01 Thu>\n'
