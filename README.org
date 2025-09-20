@@ -1,0 +1,57 @@
+* org-sort.el
+
+An LLM wrote this README so beware.
+
+A utility script for sorting top-level headings in Org-mode files. It reads an
+Org file from standard input, sorts its top-level headings based on specified
+keys, and writes the sorted output to standard output.
+
+* Usage
+
+Basic usage:
+#+begin_src bash
+./org-sort.el -- --key=a < input.org > output.org
+#+end_src
+
+Multiple keys can be specified. The first key given acts as the primary sort key.
+
+#+begin_src bash
+./org-sort.el -- --key=t --key=a < input.org > output.org
+#+end_src
+
+Combined codes can also be used with `-k`:
+
+#+begin_src bash
+./org-sort.el -- -k pA < input.org > output.org
+#+end_src
+
+* Sort Keys
+
+Uppercase reverses the sort order.
+
+| Code | Description                |
+|------+----------------------------|
+| `a`  | Alphabetical (headline text) |
+| `n`  | Numeric within headline    |
+| `o`  | TODO keyword order         |
+| `p`  | Priority cookie            |
+| `s`  | SCHEDULED timestamp        |
+| `d`  | DEADLINE timestamp         |
+| `t`  | Other timestamp in headline |
+
+* Examples
+
+- Sort alphabetically:
+  #+begin_src bash
+  ./org-sort.el -- --key=a < in.org
+  #+end_src
+
+- Sort by SCHEDULED timestamp (descending), then by priority (ascending):
+  #+begin_src bash
+  ./org-sort.el -- -k S -k p < in.org
+  #+end_src
+
+- Sort by TODO keyword order (ascending):
+  #+begin_src bash
+  ./org-sort.el -- --key=o < in.org
+  #+end_src
