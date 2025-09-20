@@ -28,6 +28,8 @@ Combined codes can also be used with `-k`:
 ./org-sort.el -- -k pA < input.org > output.org
 #+end_src
 
+But emacs option parsing apparently does /not/ like =-- -kpA=. You need the space in there.
+
 * Sort Keys
 
 Uppercase reverses the sort order.
