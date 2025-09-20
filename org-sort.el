@@ -1,4 +1,4 @@
-#!/usr/bin/env emacs -Q --script
+#!/usr/bin/env -S emacs -Q --script
 ;; org-sort-top-level.el — stdin -> sort top-level headings -> stdout
 ;;
 ;; Usage (primary key first):

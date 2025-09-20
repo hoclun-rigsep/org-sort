@@ -6,7 +6,6 @@
 # Config
 setup() {
   # Allow overriding which Emacs to use
-  EMACS_BIN="${EMACS:-emacs}"
   SCRIPT="${SCRIPT:-./org-sort.el}"
 
   if [[ ! -f "$SCRIPT" ]]; then
@@ -19,7 +18,7 @@ setup() {
 run_sort() {
   # Usage: run_sort --key=… [--key=…]
   # Reads stdin, writes stdout
-  "$EMACS_BIN" -Q --script "$SCRIPT" -- "$@"
+  "$SCRIPT" -- "$@"
 }
 
 normalize() {
