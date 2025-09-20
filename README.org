@@ -4,7 +4,8 @@ An LLM wrote this README so beware.
 
 A utility script for sorting top-level headings in Org-mode files. It reads an
 Org file from standard input, sorts its top-level headings based on specified
-keys, and writes the sorted output to standard output.
+keys, and writes the sorted output to standard output. Requires `emacs` with
+`org-mode`.
 
 * Usage
 
@@ -12,6 +13,8 @@ Basic usage:
 #+begin_src bash
 ./org-sort.el -- --key=a < input.org > output.org
 #+end_src
+
+Note double dash before actual options.
 
 Multiple keys can be specified. The first key given acts as the primary sort key.
 
